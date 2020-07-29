@@ -22,13 +22,20 @@ X_test = sc.transform(X_test)
 
 # Fitting classifier to the Training set
 # Create your classifier here
+from sklearn.ensemble import RandomForestClassifier
+classifier = RandomForestClassifier(n_estimators=10, criterion='gini', random_state=0)
+classifier.fit(X_train, y_train)
 
 # Predicting the Test set results
 y_pred = classifier.predict(X_test)
 
 # Making the Confusion Matrix
 from sklearn.metrics import confusion_matrix
-cm = confusion_matrix(y_test, y_pred)
+cm_test = confusion_matrix(y_test, y_pred)
+percentage_test = (cm_test[0][0] + cm_test[1][1])/100
+y_pred_train = classifier.predict(X_train)
+cm_train = confusion_matrix(y_train, y_pred_train)
+percentage_train = (cm_train[0][0] + cm_train[1][1])/300
 
 # Visualising the Training set results
 from matplotlib.colors import ListedColormap
@@ -41,8 +48,8 @@ plt.xlim(X1.min(), X1.max())
 plt.ylim(X2.min(), X2.max())
 for i, j in enumerate(np.unique(y_set)):
     plt.scatter(X_set[y_set == j, 0], X_set[y_set == j, 1],
-                c = ListedColormap(('orange', 'blue'))(i), label = j)
-plt.title('Classifier (Training set)')
+                c = ListedColormap(('orange', 'blue'))(i), label = j, s=15)
+plt.title('Random Forest (Training set)')
 plt.xlabel('Age')
 plt.ylabel('Estimated Salary')
 plt.legend()
@@ -59,8 +66,8 @@ plt.xlim(X1.min(), X1.max())
 plt.ylim(X2.min(), X2.max())
 for i, j in enumerate(np.unique(y_set)):
     plt.scatter(X_set[y_set == j, 0], X_set[y_set == j, 1],
-                c = ListedColormap(('orange', 'blue'))(i), label = j)
-plt.title('Classifier (Test set)')
+                c = ListedColormap(('orange', 'blue'))(i), label = j, s=15)
+plt.title('Random Forest (Test set)')
 plt.xlabel('Age')
 plt.ylabel('Estimated Salary')
 plt.legend()
