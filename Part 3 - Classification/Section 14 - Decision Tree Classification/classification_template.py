@@ -14,21 +14,32 @@ y = dataset.iloc[:, 4].values
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.25, random_state = 0)
 
-# Feature Scaling
+
+# feature scaling
 from sklearn.preprocessing import StandardScaler
 sc = StandardScaler()
 X_train = sc.fit_transform(X_train)
 X_test = sc.transform(X_test)
 
-# Fitting classifier to the Training set
+
+
+# Fitting Decision Tree to the Training set
 # Create your classifier here
+from sklearn.tree import DecisionTreeClassifier
+classifier = DecisionTreeClassifier(criterion="gini", random_state=0)
+classifier.fit(X_train, y_train)
+
 
 # Predicting the Test set results
 y_pred = classifier.predict(X_test)
 
 # Making the Confusion Matrix
 from sklearn.metrics import confusion_matrix
-cm = confusion_matrix(y_test, y_pred)
+cm_test = confusion_matrix(y_test, y_pred)
+percentage_test = (cm_test[0][0] + cm_test[1][1])/100
+y_pred_train = classifier.predict(X_train)
+cm_train = confusion_matrix(y_train, y_pred_train)
+percentage_train = (cm_train[0][0] + cm_train[1][1])/300
 
 # Visualising the Training set results
 from matplotlib.colors import ListedColormap
@@ -42,7 +53,7 @@ plt.ylim(X2.min(), X2.max())
 for i, j in enumerate(np.unique(y_set)):
     plt.scatter(X_set[y_set == j, 0], X_set[y_set == j, 1],
                 c = ListedColormap(('orange', 'blue'))(i), label = j)
-plt.title('Classifier (Training set)')
+plt.title('Decision Tree (Training set)')
 plt.xlabel('Age')
 plt.ylabel('Estimated Salary')
 plt.legend()
@@ -60,7 +71,7 @@ plt.ylim(X2.min(), X2.max())
 for i, j in enumerate(np.unique(y_set)):
     plt.scatter(X_set[y_set == j, 0], X_set[y_set == j, 1],
                 c = ListedColormap(('orange', 'blue'))(i), label = j)
-plt.title('Classifier (Test set)')
+plt.title('Decision Tree (Test set)')
 plt.xlabel('Age')
 plt.ylabel('Estimated Salary')
 plt.legend()
