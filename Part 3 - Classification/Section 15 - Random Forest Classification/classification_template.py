@@ -32,10 +32,10 @@ y_pred = classifier.predict(X_test)
 # Making the Confusion Matrix
 from sklearn.metrics import confusion_matrix
 cm_test = confusion_matrix(y_test, y_pred)
-percentage_test = (cm_test[0][0] + cm_test[1][1])/100
+accuracy_of_test = (cm_test[0][0] + cm_test[1][1])/100
 y_pred_train = classifier.predict(X_train)
 cm_train = confusion_matrix(y_train, y_pred_train)
-percentage_train = (cm_train[0][0] + cm_train[1][1])/300
+accuracy_of_train = (cm_train[0][0] + cm_train[1][1])/300
 
 # Visualising the Training set results
 from matplotlib.colors import ListedColormap

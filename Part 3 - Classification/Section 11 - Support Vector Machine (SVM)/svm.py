@@ -29,10 +29,10 @@ y_pred = classifier.predict(X_test)
 # Making the Confusion Matrix
 from sklearn.metrics import confusion_matrix
 cm = confusion_matrix(y_test, y_pred)
-percentage_test = (cm[0][0] + cm[1][1])/100
+accuracy_of_test = (cm[0][0] + cm[1][1])/100
 y_pred_train = classifier.predict(X_train)
 cm2 = confusion_matrix(y_train, y_pred_train)
-percentage_train = (cm2[0][0] + cm2[1][1])/300
+accuracy_of_train = (cm2[0][0] + cm2[1][1])/300
 
 
 # Visualising the Training set results
